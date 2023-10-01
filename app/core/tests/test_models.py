@@ -10,7 +10,10 @@ class ModelTests(TestCase):
         """Test creating a user with a email successful"""
         email = 'test@exmple.com'
         password = "1233456dfg"
-        user = get_user_model().objects.create_user(email=email, password=password)
+        user = get_user_model().objects.create_user(
+            email=email,
+            password=password
+        )
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
 
@@ -23,10 +26,29 @@ class ModelTests(TestCase):
             ["test4@example.Com", "test4@example.com"]
         ]
         for email, expected_email in sample_emails:
-            user = get_user_model().objects.create_user(email=email, password="1234ed")
+            user = get_user_model().objects.create_user(
+                email=email,
+                password="1234ed"
+            )
             self.assertEqual(expected_email, user.email)
 
     def test_new_user_without_email_raises_error(self):
         """Test creating a user without email raises an Error"""
         with self.assertRaises(ValueError):
-            get_user_model().objects.create_user(email="", password="123dggrr")
+            get_user_model().objects.create_user(
+                email="",
+                password="123dggrr"
+            )
+
+    def test_creating_superuser(self):
+        """Tests creating a superuser"""
+
+        email = "admin@example.com"
+        password = "12323dwdw"
+
+        superuser = get_user_model().objects.create_superuser(
+            email=email,
+            password=password
+        )
+        self.assertTrue(superuser.is_superuser)
+        self.assertTrue(superuser.is_staff)
