@@ -5,11 +5,13 @@ from core import models
 from django.utils.translation import gettext_lazy as _
 
 
-# Register your models here.
+# Register your models here
 
 
 class UserAdmin(BaseUserAdmin):
+
     """Define the admin pages for users"""
+
     ordering = ['id']
     list_display = ['email', 'name']
     fieldsets = (
@@ -31,6 +33,8 @@ class UserAdmin(BaseUserAdmin):
         )
     )
     readonly_fields = ['last_login']
+
+    """for admin:core_user_add url"""
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
